@@ -3,7 +3,13 @@ svgSprite = require('gulp-svg-sprite'),
 rename = require('gulp-rename'),
 del = require('del');
 
+
 var config = {
+  shape: {
+    spacing: {
+      padding: 1
+    }
+  },
   mode: {
     css: {
       sprite: 'sprite.svg',
@@ -27,11 +33,11 @@ gulp.task('createSprite', ['beginClean'], function(){
 });
 
 gulp.task('copySpriteGraphic', ['createSprite'], function(){
-  return gulp.src('./app/temp/sprite/css/**/*.svg')
+  return gulp.src('./app/temp/sprite/css/**/*.{svg,png}')
   .pipe(gulp.dest('app/assets/images/sprites'));
 });
 
-gulp.task('copySpriteCSS', ['createSprite'], function(){
+gulp.task('copySpriteCSS', ['copySpriteGraphic'], function(){
   return gulp.src('./app/temp/sprite/css/*.css')
   .pipe(rename('_sprite.css'))
   .pipe(gulp.dest('./app/assets/styles/modules'));
